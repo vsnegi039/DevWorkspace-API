@@ -6,15 +6,7 @@ import MongoConnection from "./db/mongo/connection";
 
 const mongoConnection = new MongoConnection(config.MONGO_URL);
 
-mongoConnection.connect(() => {
-	app.listen(app.get("port"), (): void => {
-		logger.info(
-			`*\t🌏 Express server started at http://localhost:${app.get(
-				"port"
-			)}\t\t*`
-    );
-	});
-});
+mongoConnection.connect(() => {});
 
 
 // Close the Mongoose connection, when receiving SIGINT
@@ -31,3 +23,5 @@ process.on('SIGINT', () => {
     process.exit(0);
   });
 });
+
+export default app;
