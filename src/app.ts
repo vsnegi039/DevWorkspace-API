@@ -9,7 +9,6 @@ import routes from './routes';
 import structuredResp from './services/resp.service';
 import logger from './logger';
 
-console.log('config: ', config);
 const app = express();
 
 app.use(
