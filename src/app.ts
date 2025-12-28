@@ -8,6 +8,7 @@ import { ApplicationError, NotFoundError } from './errors';
 import routes from './routes';
 import structuredResp from './services/resp.service';
 import logger from './logger';
+import { connectMongo } from './db/mongo/mongo';
 
 const app = express();
 
@@ -22,6 +23,11 @@ app.use(morgan('dev'));
 app.use(compression());
 app.use(cookieParser());
 app.set('port', config.PORT || 3000);
+
+app.use(async (_req, _res, next) => {
+  await connectMongo();
+  next();
+});
 
 app.use(routes);
 

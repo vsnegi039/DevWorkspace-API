@@ -8,8 +8,6 @@ export interface IUser {
   name: string;
   email: string;
   password: string;
-  preferredTone: 'formal' | 'friendly' | 'crisp';
-  customTones: string[];
   emailVerified: boolean;
 }
 
@@ -26,8 +24,6 @@ const schema = new Schema<IUserDocument>(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true, trim: true, lowercase: true },
     password: { type: String, required: true },
-    preferredTone: { type: String, enum: ['formal', 'friendly', 'crisp'] },
-    customTones: { type: [String], default: [] },
     emailVerified: { type: Boolean, default: false },
   },
   {
