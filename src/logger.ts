@@ -1,30 +1,29 @@
-import { createLogger, format, transports } from "winston";
-const logTransports = [
-	new transports.File({
-		level: "error",
-		filename: "./logs/error.log",
-		format: format.json({
-			replacer: (key, value) => {
-				if (key === "error") {
-					return {
-						message: (value as Error).message,
-						stack: (value as Error).stack,
-					};
-				}
-				return value;
-			},
-		}),
-	}),
-	new transports.Console({
-		level: "debug",
-		format: format.prettyPrint(),
-	}),
+import winston from 'winston';
+import config from './config/config';
+
+const transports: winston.transport[] = [
+  new winston.transports.Console({
+    format: winston.format.combine(
+      winston.format.colorize(),
+      winston.format.timestamp(),
+      winston.format.printf(({ level, message, timestamp }) => {
+        return `${timestamp} [${level}]: ${message}`;
+      }),
+    ),
+  }),
 ];
 
-const logger = createLogger({
-	format: format.combine(format.timestamp()),
-	transports: logTransports,
-	defaultMeta: { service: "api" },
+// OPTIONAL: enable file logging ONLY outside Vercel
+if (!config.IS_VERCEL) {
+  transports.push(
+    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'combined.log' }),
+  );
+}
+
+const logger = winston.createLogger({
+  level: 'info',
+  transports,
 });
 
 export default logger;

@@ -37,8 +37,8 @@ app.use((err: ApplicationError, req: Request, res: Response, next: NextFunction)
 
   logger.log({
     level: 'error',
-    message: 'Error in request handler',
-    error: err,
+    message: err.message,
+    stack: err.stack,
   });
 
   return structuredResp(req, res, false, err.message, err.status || 500, null);
