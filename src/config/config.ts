@@ -1,7 +1,7 @@
 import joi from 'joi';
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 
-dotenv.config();
+// dotenv.config();
 
 // Parse WHITELIST_ORIGINS as JSON array if it's a string
 const whitelistOrigins = process.env.WHITELIST_ORIGINS ? JSON.parse(process.env.WHITELIST_ORIGINS) : [];
